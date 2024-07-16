@@ -1,7 +1,6 @@
-Run with `npm start`    
+Run with `npm start`     
+    
+`localhost:3000`     
 
-Then EP is `localhost:3000/books`    
-
-or see     
-
+or see
 `https://rest-fzd6kqnqf-marketaanezkas-projects.vercel.app/books`
