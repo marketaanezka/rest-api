@@ -14,6 +14,8 @@ app.listen(PORT, () => {
   console.log("Server Listening on PORT:", PORT);
 });
 
+// mongodb+srv://marketawillis: process.env.DB_PASSWORD @cluster0.lpqm5xl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
 /**
  * @swagger
  * /status:

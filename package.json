@@ -1,7 +1,7 @@
 {
   "name": "rest-api",
   "version": "1.0.0",
-  "main": "api/app.js",
+  "main": "api/template.js",
   "scripts": {
     "start": "node api/app.js"
   },
@@ -21,7 +21,11 @@
   "homepage": "https://github.com/marketaanezka/rest-api#readme",
   "description": "",
   "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.5.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "vercel": "^34.4.0"
