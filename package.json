@@ -1,9 +1,9 @@
 {
   "name": "rest-api",
   "version": "1.0.0",
-  "main": "api/mongo.js",
+  "main": "api/app.js",
   "scripts": {
-    "start": "node api/mongo.js"
+    "start": "node api/app.js"
   },
   "repository": {
     "type": "git",
