@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
+const helmet = require('helmet');
+
 
 
 const app = express();
@@ -8,6 +10,17 @@ const port = 3000;
 
 
 app.use(express.json());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'", "https://rest-api-psi-puce.vercel.app/"],
+      scriptSrc: ["'self'", "'unsafe-eval'", "https://rest-api-psi-puce.vercel.app/"],
+      styleSrc: ["'self'", "https://rest-api-psi-puce.vercel.app/"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'", "https://rest-api-psi-puce.vercel.app/"],
+    },
+  },
+}));
 
 const password = process.env.DB_PASSWORD;
 
