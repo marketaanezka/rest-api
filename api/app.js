@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
 
+
 const app = express();
 const port = 3000;
 
@@ -137,9 +138,9 @@ async function run() {
     
 
     // Start the server
-    app.listen(port, () => {
-      console.log(`Server is running on http://localhost:${port}`);
-    });
+    // app.listen(port, () => {
+    //   console.log(`Server is running on http://localhost:${port}`);
+    // });
   } catch (error) {
     console.error(error);
   }
@@ -147,4 +148,6 @@ async function run() {
 
 run().catch(console.dir);
 
-// node api/mongo.js
+module.exports = app;
+
+// node api/app.js
