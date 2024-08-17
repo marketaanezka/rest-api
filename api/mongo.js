@@ -5,6 +5,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 const app = express();
 const port = 5000;
 
+
 app.use(express.json());
 
 const password = process.env.DB_PASSWORD;
@@ -15,17 +16,14 @@ const client = new MongoClient(uri);
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
+
     await client.connect();
-    // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     const dbName = "myDatabase";
     const collectionName = "books";
 
-    // Create references to the database and collection in order to run
-    // operations on them.
     const database = client.db(dbName);
     const collection = database.collection(collectionName);
 
@@ -84,6 +82,58 @@ async function run() {
         res.status(500).json({ message: error.message });
       }
     });
+
+    // API endpoint to update an existing document by ID
+    app.put('/api/books/:id', async (req, res) => {
+    try {
+      const bookId = req.params.id;
+      const updatedBook = req.body;
+
+      if (!updatedBook || !updatedBook.title || !updatedBook.author) {
+        res.status(400).json({ message: 'Title or author are required' });
+        return;
+      }
+
+      const query = { _id: new ObjectId(bookId) };
+      const update = {
+        $set: {
+          title: updatedBook.title,
+          author: updatedBook.author,
+        },
+      };
+
+      const result = await collection.updateOne(query, update);
+
+      if (result.matchedCount === 0) {
+        res.status(404).json({ message: 'Book not found' });
+        return;
+      }
+
+      const updatedDocument = await collection.findOne(query);
+      res.json(updatedDocument);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
+  // API endpoint to delete a document by ID
+  app.delete('/api/books/:id', async (req, res) => {
+    try {
+      const bookId = req.params.id;
+      const query = { _id: new ObjectId(bookId) };
+
+      const result = await collection.deleteOne(query);
+
+      if (result.deletedCount === 0) {
+        res.status(404).json({ message: 'Book not found' });
+        return;
+      }
+
+      res.status(204).send(); // Successfully deleted
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
     
 
     // Start the server
@@ -96,3 +146,5 @@ async function run() {
 }
 
 run().catch(console.dir);
+
+// node api/mongo.js
